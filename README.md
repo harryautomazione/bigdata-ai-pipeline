@@ -1,4 +1,4 @@
-Phase 1: Data Ingestion & Cleaning (Batch)
+1️⃣ Phase 1: Data Ingestion & Cleaning (Batch)
 🎯 Objective :
 
 Ingest raw transaction data and perform basic data cleaning to ensure data quality.
@@ -31,7 +31,7 @@ Invalid or negative transaction amounts
 
 A clean, structured DataFrame ready for aggregation and analytics.
 
-Phase 2: Batch Aggregation & Output Generation
+2️⃣ Phase 2: Batch Aggregation & Output Generation
 🎯 Objective :
 
 Generate user-level spend analytics from transaction data.
