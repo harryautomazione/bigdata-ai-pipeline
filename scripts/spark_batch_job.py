@@ -13,7 +13,7 @@ def main():
     # Create Spark session
     spark = (
     SparkSession.builder
-    .appName("BatchJob")
+    .appName("BatchUserSpendAggregation")
     .master("local[1]")  
     .config("spark.sql.adaptive.enabled", "false")
     .config("spark.sql.warehouse.dir", "file:/C:/spark-warehouse")
@@ -23,18 +23,18 @@ def main():
     )
     spark.sparkContext.setLogLevel("ERROR")
 
-    # File paths (absolute for Windows)
-    raw_file_path = r"E:/bigdata-ai-pipeline/data/transactions.json"
-    processed_path = r"E:/bigdata-ai-pipeline/data/processed/user_spend"
+    # File paths 
+    raw_file_path = "/mnt/e/bigdata-ai-pipeline/data/output"
+    processed_path = "/mnt/e/bigdata-ai-pipeline/data/output/user_spend"
 
     # Clean output folder before writing (Windows-safe)
     if os.path.exists(processed_path):
         shutil.rmtree(processed_path)
 
-    # Read raw JSON data
-    df = spark.read.json(raw_file_path)
-    print("Schema of raw data:")
-    df.printSchema()
+    # Read raw parquet
+    df = spark.read.parquet(raw_file_path)
+    # print("Schema of raw data:")
+    # df.printSchema()
 
     # Basic cleaning: cast amount to numeric and remove nulls/invalid
     clean_df = df.withColumn("amount", col("amount").cast(DoubleType())) \
@@ -49,7 +49,7 @@ def main():
     
     # NOTE:Parquet write causes NativeIO$Windows UnsatisfiedLinkError on Windows local filesystem.
     # This is a known Spark + Hadoop limitation on Windows.
-    # Using CSV for local development; Parquet should be used in Linux/WSL/production.
+    # Use CSV for local development; Parquet should be used in Linux/WSL/production.
     # ----------------------------
     # Write aggregated data (Parquet)
     # ----------------------------
@@ -59,7 +59,7 @@ def main():
 
     # Verify output
     df_check = spark.read.parquet(processed_path)
-    df_check.show(5)
+    df_check.show(10, truncate=False)
 
     # Stop Spark session
     spark.stop()

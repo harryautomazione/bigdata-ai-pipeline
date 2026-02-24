@@ -1,82 +1,117 @@
-1️⃣ Phase 1: Data Ingestion & Cleaning (Batch)
-🎯 Objective :
+This project implements an end-to-end real-time fraud detection pipeline using:
 
-Ingest raw transaction data and perform basic data cleaning to ensure data quality.
+Apache Kafka for event streaming
 
-📥 Input :
+Spark Structured Streaming for real-time processing
 
-transactions.json
+Event-time windowing with watermarking
 
-Each record represents a transaction event with:
+Spark ML Pipeline (Logistic Regression) for fraud prediction
 
-user_id
-amount
-event_time
-device
-location
+Kafka-to-Kafka architecture for scalable downstream consumption
 
-⚙️ Processing Steps
+The system processes transaction events in real time, computes user-level spending features over sliding windows, applies a trained ML model, and publishes fraud predictions to a downstream Kafka topic.
 
-Using PySpark:
+🏗 Architecture:
+                ┌────────────────────┐
+                │  Transaction       │
+                │  Producer          │
+                │  (generate_data.py)│
+                └─────────┬──────────┘
+                          │
+                          ▼
+                ┌────────────────────┐
+                │  Kafka Topic       │
+                │  transaction_events│
+                └─────────┬──────────┘
+                          │
+                          ▼
+                ┌────────────────────────────┐
+                │ Spark Structured Streaming │
+                │                            │
+                │ • Event-time parsing       │
+                │ • Watermark (10 min)       │
+                │ • 30s window aggregation   │
+                │ • Feature engineering      │
+                │ • ML Pipeline inference    │
+                └─────────┬──────────────────┘
+                          │
+                          ▼
+                ┌────────────────────┐
+                │ Kafka Topic        │
+                │ fraud_predictions  │
+                └─────────┬──────────┘
+                          │
+                          ▼
+                ┌────────────────────┐
+                │ Kafka Consumer     │
+                │ (real-time output) │
+                └────────────────────┘
+⚙️ Key Features:
 
-Read JSON data into a Spark DataFrame
-Cast amount field to numeric type
+Event-time window aggregation (30 seconds)
 
-Filter out:
+Watermarking (10 minutes) for late data handling
 
-Null values
-Invalid or negative transaction amounts
+Stateful processing using Spark Structured Streaming
 
-✅ Outcome
+ML model trained using Spark ML Pipeline
 
-A clean, structured DataFrame ready for aggregation and analytics.
-
+<<<<<<< HEAD
 2️⃣ Phase 2: Batch Aggregation & Output Generation
 🎯 Objective :
+=======
+Real-time inference in streaming mode
+>>>>>>> fb4fe27 (Cleaned repo: added .gitignore and removed generated files)
 
-Generate user-level spend analytics from transaction data.
+Kafka-to-Kafka streaming architecture
 
-🔄 Aggregations Performed
+Checkpointing for fault tolerance
 
-For each user_id:
+⚙️ ML Model:
 
-Total Spend → sum(amount)
-Transaction Count → count(*)
+Logistic Regression
 
-This mirrors real-world use cases such as:
+Features:
 
-Customer analytics
-Financial reporting
-Behavioral analysis
-
-⚠️ Engineering Challenge (Windows Environment):
-
-While implementing the Spark output step, a known issue was encountered:
-
-"java.lang.UnsatisfiedLinkError: NativeIO$Windows"
-
-This error occurs due to Hadoop Native IO limitations on Windows local filesystems, especially when writing Parquet files using Spark.
-
-🧠 Design Decision & Solution :
-
-The Spark aggregation logic is fully implemented and preserved (spark_batch_job.py)
-For local development on Windows, output generation is handled using a Pandas-based fallback (generate_output_pandas.py)
-This ensures:
-Successful pipeline execution
-Verifiable output data
-No compromise on Spark logic or design
-
-Note:
-The Spark → Parquet output step is intended to run in Linux / WSL / production environments, where Hadoop native libraries are fully supported.
-
-📤 Output (Current Phase)
-
-Generated file: user_spend.csv
-
-Contains:
-user_id
 total_spend
+
 transaction_count
 
-![alt text](image.png)
+avg_amount
 
+Pipeline-based training (VectorAssembler + LR)
+
+▶️ How to Run:
+
+1️⃣ Start Kafka
+bin/zookeeper-server-start.sh config/zookeeper.properties
+bin/kafka-server-start.sh config/server.properties
+
+2️⃣ Create Topics
+bin/kafka-topics.sh --create --topic transaction_events --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+bin/kafka-topics.sh --create --topic fraud_predictions --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+3️⃣ Train Model
+python train_model.py
+
+4️⃣ Start Streaming Job
+python streaming_fraud_scoring.py
+
+5️⃣ Start Producer
+python generate_data.py
+
+6️⃣ Consume Predictions
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic fraud_predictions --from-beginning
+
+⚙️ This project demonstrates:
+
+Distributed stream processing
+
+Stateful event-time computation
+
+Real-time ML inference
+
+Kafka-based event-driven architecture
+
+Production-style streaming pipeline

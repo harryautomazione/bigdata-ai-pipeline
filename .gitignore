@@ -1,0 +1,33 @@
+# Virtual Environment
+venv/
+.env/
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Spark Checkpoints
+checkpoints/
+scripts/checkpoints/
+
+# Big Data Outputs
+data/output/
+data/feature_store/
+
+# ML Models
+models/
+*.model
+*.pkl
+
+# Spark Metadata
+*.crc
+metadata/
+commits/
+offsets/
+state/
+
+# OS / System Files
+.DS_Store
+Thumbs.db
