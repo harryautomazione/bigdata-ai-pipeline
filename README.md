@@ -1,3 +1,4 @@
+⚙️ Objective:
 This project implements an end-to-end real-time fraud detection pipeline using:
 
 Apache Kafka for event streaming
@@ -56,13 +57,6 @@ Watermarking (10 minutes) for late data handling
 Stateful processing using Spark Structured Streaming
 
 ML model trained using Spark ML Pipeline
-
-<<<<<<< HEAD
-2️⃣ Phase 2: Batch Aggregation & Output Generation
-🎯 Objective :
-=======
-Real-time inference in streaming mode
->>>>>>> fb4fe27 (Cleaned repo: added .gitignore and removed generated files)
 
 Kafka-to-Kafka streaming architecture
 
