@@ -18,7 +18,7 @@ A real-time fraud detection system that processes streaming transaction data usi
 
 This project demonstrates how modern data platforms process event streams and perform real-time ML scoring.
 
-* Architecture -->
+## Architecture -->
                           ┌─────────────────────────────┐
                           │   Transaction Generator     │
                           │  (Python Producer Script)   │
