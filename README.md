@@ -5,18 +5,18 @@
 
 ## Motivation -->
 
-Financial systems require real-time fraud detection to prevent
+- Financial systems require real-time fraud detection to prevent
 suspicious transactions before they are completed.
 
-This project demonstrates how modern data platforms combine
+- This project demonstrates how modern data platforms combine
 event streaming, distributed processing, and machine learning
 to perform real-time fraud detection.
 
 ## Real-Time Fraud Detection Pipeline -->
 
-A real-time fraud detection system that processes streaming transaction data using Apache Kafka and Apache Spark Structured Streaming, applies machine learning inference, and outputs fraud predictions for downstream systems.
+- A real-time fraud detection system that processes streaming transaction data using Apache Kafka and Apache Spark Structured Streaming, applies machine learning inference, and outputs fraud predictions for downstream systems.
 
-This project demonstrates how modern data platforms process event streams and perform real-time ML scoring.
+- This project demonstrates how modern data platforms process event streams and perform real-time ML scoring.
 
 ## Architecture -->
                           ┌─────────────────────────────┐
@@ -115,23 +115,25 @@ This project demonstrates how modern data platforms process event streams and pe
                      
 ## Features -->
 
-Real-time transaction ingestion using Kafka
-Stream processing using Spark Structured Streaming
-Feature engineering for transaction aggregation
-Machine learning inference using Spark ML
-Fraud prediction output published to Kafka
-Modular pipeline for easy extension
+- Real-time transaction ingestion using Kafka
+- Stream processing using Spark Structured Streaming
+- Feature engineering for transaction aggregation
+- Machine learning inference using Spark ML
+- Fraud prediction output published to Kafka
+- Modular pipeline for easy extension
 
 ## Tech Stack -->
 
-Apache Kafka – event streaming platform
-Apache Spark – stream processing engine
-PySpark – distributed data processing
-Spark MLlib – machine learning
-Python
-Parquet – feature store format
+- Apache Kafka – event streaming platform
+- Apache Spark – stream processing engine
+- PySpark – distributed data processing
+- Spark MLlib – machine learning
+- Python
+- Parquet – feature store format
 
-## Project Structure -->
+## Project Structure
+
+```
 bigdata-ai-pipeline/
 │
 ├── data/
@@ -143,9 +145,10 @@ bigdata-ai-pipeline/
 ├── scripts/
 │   ├── train_model.py
 │   ├── transaction_producer.py
-│   ├── streaming_pipeline.py
+│   └── streaming_pipeline.py
 │
-├── README.md
+└── README.md
+```
 
 ## Installation -->
 1. Install dependencies
@@ -171,21 +174,21 @@ python train_model.py
 
 ⁕ This will:
 
-Load feature store data
-Train a logistic regression model
-Save the model to the models/ directory
-Run Streaming Pipeline
+- Load feature store data
+- Train a logistic regression model
+- Save the model to the models/ directory
+- Run Streaming Pipeline
 
 ⁕ Start the Spark streaming job:
 
 spark-submit streaming_pipeline.py
 
-The pipeline will:
+## The pipeline will -->
 
-Consume transactions from Kafka
-Generate features
-Apply fraud detection model
-Publish predictions to Kafka
+- Consume transactions from Kafka
+- Generate features
+- Apply fraud detection model
+- Publish predictions to Kafka
 
 ## View Predictions -->
 
@@ -209,23 +212,23 @@ bin/kafka-console-consumer.sh \
 
 ## Example Use Cases -->
 
-Fraud detection in payment systems
-Real-time transaction monitoring
-Event-driven ML inference pipelines
-Streaming analytics platforms
+- Fraud detection in payment systems
+- Real-time transaction monitoring
+- Event-driven ML inference pipelines
+- Streaming analytics platforms
 
 ## Future Improvements -->
 
-Add Docker deployment
-Integrate Airflow for orchestration
-Add dashboard for fraud alerts
-Implement advanced ML models
+- Add Docker deployment
+- Integrate Airflow for orchestration
+- Add dashboard for fraud alerts
+- Implement advanced ML models
 
 ## Contributing -->
 
-Contributions are welcome. Please open an issue or submit a pull request for improvements.
+- Contributions are welcome. Please open an issue or submit a pull request for improvements.
 
 ## License -->
 
-This project is licensed under the MIT License.
+- This project is licensed under the MIT License.
 
